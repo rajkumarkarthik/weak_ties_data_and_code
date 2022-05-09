@@ -7,22 +7,22 @@ library(coefplot)
 library(gridExtra)
 
 # Summary of 2015 dataset -------------
-# Table 1
+# Table S1
 stargazer(edge2015)  
 
-# Table 2
+# Table S2
 edge2015 %>% group_by(mid) %>% summarize(source_variant = source_variant[1]) %>% 
   group_by(source_variant) %>% tally() %>% mutate(prob = n / sum(n)) %>% 
   select(-n) %>% xtable(digits = 3) %>% print(include.rownames = FALSE)
 
 # Summary of 2019 dataset ---------------
-# Tables 3, 4 
+# Tables S3, S4 
 stargazer(node2019)
 
 # Fig 1B
 node2019 %>% select(contains("exp")) %>% lapply(sum) %>% unlist()
 
-# Table for Fig 1C aka Table 5 ------------
+# Table for Fig 1C aka Table S5 ------------
 states <- fread("state_avgs.csv")
 states %>% mutate(num_obs = formatC(num_obs, format = "d", big.mark = ","),
                   mean_diversity = 1 - mean_clus) %>% 
@@ -30,7 +30,7 @@ states %>% mutate(num_obs = formatC(num_obs, format = "d", big.mark = ","),
   xtable(digits = 3) %>% print(include.rownames = FALSE)
 
 # OLS regs for 2015 collapsed to node level data -----------
-# Table 6: First stage for 2015 collapsed
+# Table S6: First stage for 2015 collapsed
 edge2015015 %>% 
   mutate(weak_tie = n_f_common <= 1, 
          medium_tie = (n_f_common > 1 & n_f_common <= 6),
@@ -57,12 +57,12 @@ node2015 %>% felm(n_strong_tie ~ variant_0 + variant_2 + variant_3 + variant_4 +
                     variant_5 + variant_6 | 0 | 0 | mid, data = .) -> 
   firststage_node2015_strongest
 
-# Table 6 
+# Table S6 
 # Regression table with robust standard errors 
 stargazer(firststage_node2015_weakest, firststage_node2015_medium, 
           firststage_node2015_strongest, type='text')
 
-# OLS regs for Table 7 ----------
+# OLS regs for Table S7 ----------
 # 2015 edge level first stage 
 # Column 1: Mutual connections outcome 
 edge2015 %>% 
@@ -84,7 +84,7 @@ edge2015 %>%
        data = .) -> edge_firststage_ii
 # variant_1 dropped explicitly for multicollinearity 
 
-# Table 8---------
+# Table S8---------
 # 2015 node level relationship between tie strength and job transmission------
 node2015 %>% felm(job_trans ~ n_weak_tie + n_medium_tie + n_strong_tie | 0 | 0 |
                     mid, data = .) -> node2015_ols
@@ -95,7 +95,7 @@ node2015 %>%
             variant_2 + variant_3 + variant_4 + variant_5 + variant_6) | mid,
        data = .) -> node2015_iv
 
-# Table 8 
+# Table S8 
 stargazer(node2015_ols, node2015_iv)
 
 # Fig 3 tables ------------
@@ -143,7 +143,7 @@ edge2015 %>%
          mid,
        data = .) -> ols_mf_1
 
-# Table 9 
+# Table S9 
 stargazer(ols_mf_0, ols_mf_1, iv_mf_0, iv_mf_1)
 
 # IV specifications where standard errors are clustered at the individual
@@ -169,7 +169,7 @@ edge2015 %>% mutate(rowid = row_number()) %>%
          rowid,
        data = .) -> iv_mf_3
 
-# Table 28 
+# Table S28 
 stargazer(iv_mf_0, iv_mf_1, iv_mf_2, iv_mf_3)
 
 # Interaction intensity metric 
@@ -218,13 +218,13 @@ edge2015 %>%
          mid,
        data = .) -> ols_ii_1 
 
-# Table 10 
+# Table S10 
 stargazer(ols_ii_0, ols_ii_1, iv_ii_0, iv_ii_1)
 
 node2019 %>% mutate(all_ties = n_weak_pretreat + n_strong_pretreat) %>% 
   relocate(all_ties, .before = n_weak_pretreat) -> node2019
 
-# Table 11 -----------
+# Table S11 -----------
 # 2019 node level first stage replication -----------
 node2019 %>% 
   felm(all_ties ~ exp_variant | 0 | 0 | id, data = .) -> 
@@ -236,7 +236,7 @@ node2019 %>%
 node2019 %>% 
   felm(n_strong_pretreat ~ exp_variant | 0 | 0 | id, data = .) -> 
   firststage19_strongties
-# Table 11 
+# Table S11 
 stargazer(firststage19_allties, firststage19_weakties, 
           firststage19_strongties)
 
@@ -255,7 +255,7 @@ node2019 %>%
   felm(job_applies ~ n_weak_pretreat + n_strong_pretreat | 0 | 0 | id,
      data = .) -> ols_node
 
-# Table 12 
+# Table S12 
 stargazer(ols_node, iv_node)
 
 # With post-treatment tie strength as endogenous variable -------------
@@ -272,7 +272,7 @@ node2019 %>%
     data = .
   ) -> iv_node2
 
-# Table 13 
+# Table S13 
 stargazer(ols_node2, iv_node2)
 
 

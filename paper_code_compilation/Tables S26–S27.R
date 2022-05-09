@@ -12,7 +12,7 @@ regdate_mid[edge2015] -> edge2015
 
 names(edge2015)
 
-# Table 26 ------------
+# Table S26 ------------
 # Quartiles of profile creation dates in the 2015 data 
 edge2015$registrationDate %>% quantile(probs=seq(0,1,0.25),type=1,na.rm=T)
 # 0%
@@ -49,7 +49,7 @@ reglist <- list()
 for (i in 1:4) {
     edge2015[regDateQuartile == i] %>% ivspec_2015mf() -> reglist[[i]]
 }
-# Table 27 
+# Table S27 
 stargazer(reglist, type='text')
 
 # Mutual connections threshold at 8

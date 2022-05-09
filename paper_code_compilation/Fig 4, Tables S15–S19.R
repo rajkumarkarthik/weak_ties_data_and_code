@@ -187,19 +187,19 @@ naics %>% select(NAICS_2017_2D, wfh_shares_unweighted) %>%
 ind_ranks %>% select(NAICS_2017_2D, naics_name, any_of(c("wfh_rank_old", varnames))) %>% 
   select(-task_manual_rank) %>% arrange(NAICS_2017_2D) -> ind_ranks
 
-# Table 15 
+# Table S15 
 ind_ranks[, 1:5] %>% xtable(digits = 0) %>% print(include.rownames = FALSE)
-# Table 16 
+# Table S16 
 ind_ranks[, c(1:2, 6:8)] %>% xtable(digits = 0) %>% 
   print(include.rownames = FALSE)
 
 
 # Make regression tables for heterogeneity 
-# Table 17 
+# Table S17 
 stargazer(wfh_regs[[1]], wfh_regs[[2]], it_regs[[1]], it_regs[[2]])
-# Table 18 
+# Table S18 
 stargazer(sml_regs[[1]], sml_regs[[2]], ai_regs[[1]], ai_regs[[2]])
-# Table 19 
+# Table S19 
 stargazer(software_regs[[1]], software_regs[[2]],
           robot_regs[[1]], robot_regs[[2]])
 

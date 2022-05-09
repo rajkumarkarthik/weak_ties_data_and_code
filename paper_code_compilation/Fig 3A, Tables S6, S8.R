@@ -49,7 +49,7 @@ grid.arrange(grobs=list(ols1, iv1), nrow=1,
              top = "Node-level job transmission regression")
 
 # Table for these regressions -------
-# Table 6 of SI: first-stage of 2015 node level data 
+# Table S6 of SI: first-stage of 2015 node level data 
 node2015 %>% 
   felm(Weak ~ source_variant | 0 | 0 | mid, data = .) -> 
   firststage_weak
@@ -61,7 +61,7 @@ node2015 %>%
   firststage_strong
 stargazer(firststage_weak, firststage_medium, firststage_strong)
 
-# Table 8 of SI: OLS and IV regressions of job transmission on tie counts 
+# Table S8 of SI: OLS and IV regressions of job transmission on tie counts 
 # by strength in 2015 node level data 
 stargazer(lmod, ivmod)
 

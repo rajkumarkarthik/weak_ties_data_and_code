@@ -21,7 +21,7 @@ node2019 %>% filter(exp_variant == 'Control') %>%
 node2019 %>%  filter(exp_variant == 'Control') %>% 
   pull(invite_receives) %>% var() -> exp_control_var
 
-# Table 25: standardized differences 
+# Table S25: standardized differences 
 node2019 %>% group_by(exp_variant) %>% 
   summarize(invites_received_avg = mean(invite_receives),
             invites_received_var = var(invite_receives)) %>% 
